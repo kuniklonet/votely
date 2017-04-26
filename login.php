@@ -1,3 +1,7 @@
+<?php
+include('php/Login.php');
+$Login->start_session();
+ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -25,25 +29,25 @@
     </div>
   </nav>
     <div class="row">
-      <form class="col s12 m8 offset-m2 l6 offset-l3 text-center">
+      <form class="col s12 m8 offset-m2 l6 offset-l3 text-center" action="php/validate.php" method="post">
         <div class="row">
           <div class="input-field col s12">
             <i class="material-icons prefix">work</i>
-            <input id="icon_prefix" type="text" class="validate">
+            <input id="icon_prefix" type="text" class="validate" name ="organisation">
             <label for="icon_prefix">Organisation</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
             <i class="material-icons prefix">account_circle</i>
-            <input id="icon_prefix" type="text" class="validate">
+            <input id="icon_prefix" type="text" class="validate" name="username">
             <label for="icon_prefix">Username</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
             <i class="material-icons prefix">lock</i>
-            <input id="password" type="password" class="validate">
+            <input id="password" type="password" class="validate" name="password">
             <label for="password">Password</label>
           </div>
         </div>
