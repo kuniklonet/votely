@@ -1,5 +1,4 @@
 <?php
-include('db');
 /**
  * Handles sessions
  */
@@ -30,9 +29,9 @@ class Login
   */
   public static function validate($username, $password, $organisation){
     self::start_session();
-
-    //using database
-    $query = "SELECT password FROM users WHERE username = '".$username."'";
+    include('db.php');
+    // //using database
+    $query = "SELECT password FROM users WHERE username = '".$username."' AND organisation = '".$organisation."'";
     $result = $conn->query($query);
     foreach($result as $row){
       $dbpass = $row['password'];
@@ -54,6 +53,12 @@ class Login
     // }else{
     //   return 0;
     // }
+
+    //easy mode
+    // $_SESSION["username"] = "testuser";
+    // $_SESSION["organisation"] = "testorg";
+    // return 1;
+
   }
 
   /**
