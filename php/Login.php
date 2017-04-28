@@ -1,4 +1,5 @@
 <?php
+include('db');
 /**
  * Handles sessions
  */
@@ -25,19 +26,39 @@ class Login
   }
 
   /**
-  * Logs the user in if. Returns -1 if the login details are incorrect.
+  * Logs the user in if login details are correct. Returns -1 if the login details are incorrect.
   */
   public static function validate($username, $password, $organisation){
     self::start_session();
-    if($username == "mark" && $password == "pass"){
+
+    //using database
+    $query = "SELECT password FROM users WHERE username = '".$username."'";
+    $result = $conn->query($query);
+    foreach($result as $row){
+      $dbpass = $row['password'];
+    }
+
+    if($password == $dbpass){
       $_SESSION["username"] = $username;
       $_SESSION["organisation"] = $organisation;
       return 1;
     }else{
       return 0;
     }
+
+    // using fixed username and password for testing
+    // if($username == "mark" && $password == "pass"){
+    //   $_SESSION["username"] = $username;
+    //   $_SESSION["organisation"] = $organisation;
+    //   return 1;
+    // }else{
+    //   return 0;
+    // }
   }
 
+  /**
+  * Logs the user out by destroying their session and all session variables.
+  */
   public static function logout(){
     self::start_session();
     unset($_SESSION['organisation']);
