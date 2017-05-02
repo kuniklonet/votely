@@ -7,13 +7,23 @@ class Ballot
   private $id;
   private $name;
   private $description;
-  private $candidates;
-  private $votes; //array of vote objects relating to this ballot.
-  function __construct($id, $name, $description)
+  private $candidates = array();
+  private $votes = array(); //array of vote objects relating to this ballot.
+  function __construct()
   {
-    $this->id = $id;
-    $this->name = $name;
-    $this->description = $description;
+
+  }
+
+  public static function makeBallot(){
+    include('db.php');
+    // //using database
+    $query = "INSERT INTO ballots (description) VALUES ('test')";
+
+    $conn->query($query);
+    $lastId = $conn->insert_id;
+    $ballot = new Ballot();
+    $ballot->setId($lastId);
+    return $ballot;
   }
 
   /**
@@ -29,20 +39,45 @@ class Ballot
     return $candidates;
   }
 
+
   public function getId(){
     return $this->id;
+  }
+
+  public function setId($id){
+    $this->id = $id;
   }
 
   public function getName(){
     return $this->name;
   }
 
+  public function setName($name){
+    $this->name = $name;
+  }
+
   public function getDescription(){
     return $this->description;
   }
 
+  public function setDescription($description){
+    $this->description = $description;
+  }
+
   public function getCandidates(){
     return $candidates;
+  }
+
+  public function addCandidate($candidate){
+    array_push($this->candidates, $candidate);
+  }
+
+  public function getVotes(){
+    return $votes;
+  }
+
+  public function addVote($vote){
+    array_push($this->votes, $vote);
   }
 
 }
