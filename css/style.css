@@ -12,3 +12,11 @@
   margin-left:auto;
   margin-right:auto;
 }
+
+.modal.bottom-sheet {
+  max-height: 75% !important;
+}
+
+.candidate-list{
+  font-size: 24 !important;
+}
