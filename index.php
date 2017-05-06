@@ -1,7 +1,7 @@
 <?php
 include('php/Login.php');
 $Login->start_session();
-$Login->check_session();
+//$Login->check_session();
  ?>
 <!DOCTYPE html>
 <html>
@@ -40,44 +40,78 @@ $Login->check_session();
     </div>
   </nav>
   <div class="container">
-
     <ul class="collection">
+
       <li class="collection-item avatar">
         <i class="material-icons circle blue">grade</i>
         <span class="title">President</span>
         <p>This ballot is open for voting.</p>
-        <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+        <a href="#modalload"class="secondary-content btn-floating btn-large red" onclick="loadModal('1234')">
+          <i class="large material-icons">subject</i>
+        </a>
       </li>
 
       <li class="collection-item avatar">
         <i class="material-icons circle orange">lock</i>
         <span class="title">Vice President</span>
         <p>This ballot is not yet open.</p>
-        <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+        <a href="#modalload"class="secondary-content btn-floating btn-large red" onclick="loadModal('1234')">
+          <i class="large material-icons">subject</i>
+        </a>
       </li>
 
       <li class="collection-item avatar">
         <i class="material-icons circle green">done</i>
         <span class="title">Secretary</span>
         <p>You have successfully voted on this ballot.</p>
-        <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+        <a href="#modalload"class="secondary-content btn-floating btn-large red" onclick="loadModal('1234')">
+          <i class="large material-icons">subject</i>
+        </a>
       </li>
 
       <li class="collection-item avatar">
         <i class="material-icons circle green">done</i>
         <span class="title">Treasurer</span>
         <p>You have successfully voted on this ballot.</p>
-        <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+        <a href="#modalload"class="secondary-content btn-floating btn-large red" onclick="loadModal('1234')">
+          <i class="large material-icons">subject</i>
+        </a>
       </li>
     </ul>
   </div>
 
 
+  <!-- Modal With Preloader -->
+  <div id="modalload" class="modal bottom-sheet">
+    <div class="modal-content">
+      <div class="preloader-holder">
+        <div class="preloader-wrapper big active">
+          <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+              <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   </body>
   <script type="text/javascript">
     $( document ).ready(function(){
       $(".button-collapse").sideNav();
+      $('.modal').modal();
     })
+
+    function loadModal(id){
+      //AJAX here
+      console.log(id);
+    }
   </script>
 </html>
