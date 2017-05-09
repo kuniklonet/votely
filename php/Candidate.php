@@ -24,6 +24,15 @@ class Candidate
     return $this->ballot_id;
   }
 
-}
+  public function toModalMarkup(){
+    $string = "";
+    $string .= "<li class='collection-item'>";
+    $string .= $this->name;
+    $string .= "<div class='input-field inline'>";
+    $string .= "<input name='".$this->id."' type='number' class='validate preference' placeholder='Preference'>";
+    $string .= "";
 
-?>
+    return $string;
+  }
+
+}
