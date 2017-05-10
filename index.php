@@ -2,43 +2,9 @@
 include('php/Login.php');
 $Login->start_session();
 $Login->check_session();
- ?>
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <!--Import Google Icon Font-->
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      <!--Import materialize.css-->
-      <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
-
-      <link type="text/css" rel="stylesheet" href="css/style.css"  media="screen,projection"/>
-      <!--Let browser know website is optimized for mobile-->
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Votely</title>
-  </head>
-  <body>
-  <!--Import jQuery before materialize.js-->
-  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script type="text/javascript" src="js/materialize.min.js"></script>
-
-
-  <nav>
-    <div class="nav-wrapper blue">
-      <a href="#" class="brand-logo center">Votely</a>
-      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-      <ul id="nav-mobile" class="right hide-on-small-and-down">
-        <li><a href="#">Dashboard</a></li>
-        <li><a href="#">Archive</a></li>
-        <li><a href="php/logout.php">Logout</a></li>
-      </ul>
-      <ul class="side-nav" id="mobile-demo">
-        <li><a href="#">Dashboard</a></li>
-        <li><a href="#">Archive</a></li>
-        <li><a href="php/logout.php">Logout</a></li>
-      </ul>
-    </div>
-  </nav>
+include("includes/head.php");
+include("includes/nav.php");
+  ?>
   <div class="container">
     <ul class="collection">
 
