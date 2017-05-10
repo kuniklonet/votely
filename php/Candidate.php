@@ -14,6 +14,21 @@ class Candidate
     $this->ballot_id = $ballot_id;
   }
 
+  public static function makeExistingCandidate($id){
+    include('db.php');
+
+    $query = "SELECT * FROM candidates WHERE id = '".$id."'";
+
+    $result = $conn->query($query);
+    if(mysqli_num_rows($result)<1){
+      return 0;
+    }else{
+      $row = mysqli_fetch_assoc($result);
+      $candidate = new Candidate($id, $row['name'], $row['ballot_id']);
+      return $candidate;
+    }
+  }
+
   public function getId(){
     return $this->id;
   }
@@ -35,4 +50,11 @@ class Candidate
     return $string;
   }
 
+  public function toJSON(){
+    $array = array('id' => $this->id, 'name' => $this->name, 'ballot_id' => $this->ballot_id);
+
+    return json_encode($array);
+  }
+
 }
+?>

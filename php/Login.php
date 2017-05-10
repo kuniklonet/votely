@@ -29,7 +29,7 @@ class Login
   */
   public static function validate($username, $password, $organisation){
     self::start_session();
-    include('db.php');
+    include_once('db.php');
     // //using database
     $query = "SELECT password FROM users WHERE username = '".$username."' AND organisation = '".$organisation."'";
     $result = $conn->query($query);

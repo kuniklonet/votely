@@ -7,8 +7,11 @@ class Ballot
   private $id;
   private $name = "";
   private $description = "";
+  private $organisation = "";
+  private $state = "";
   private $candidates = array();
   private $votes = array(); //array of vote objects relating to this ballot.
+
   function __construct($id, $name, $description)
   {
     $this->id = $id;
@@ -18,33 +21,45 @@ class Ballot
 
 
   public static function makeExistingBallot($id){
-    include('db.php');
+    require('db.php');
 
     $query = "SELECT * FROM ballots WHERE id = '".$id."'";
-
     $result = $conn->query($query);
-    if(mysqli_num_rows($result)>0){
+    if(mysqli_num_rows($result)<1){
       return 0;
     }else{
       $ballot = new Ballot;
       $ballot->setId($id);
-      while($row = mysqli_fetch_array($result)){
-        $ballot->setName($row['name']);
-        $ballot->setDescription($row['description']);
-        $candidates = self::retrieveCandidates;
-        foreach ($candidates as $candidate) {
-          $ballot.addCandidate($candidate);
-        }
-      }
-      //retrieveDetails();
+      $ballot->refreshDetails();
+      return $ballot;
     }
+  }
+
+  public function refreshDetails(){
+    include('db.php');
+    $query = "SELECT * FROM ballots WHERE id = '".$this->id."'";
+    $result = $conn->query($query);
+    while($row = mysqli_fetch_array($result)){
+      $this->setName($row['name']);
+      $this->setDescription($row['description']);
+      $this->setOrganisation($row['organisation']);
+      $this->setState($row['state']);
+
+      // echo("refreshed ");
+
+      $candidates = $this->retrieveCandidates();
+      foreach ($candidates as $candidate) {
+      $this->addCandidate($candidate);
+      }
+    }
+
   }
 
   /*
   * Returns a new Ballot object that contains its id in the database.
   */
   public static function makeNewBallot(){
-    include('db.php');
+    include_once('db.php');
 
     $query = "INSERT INTO ballots (description) VALUES ('test')";
     $conn->query($query);
@@ -59,26 +74,31 @@ class Ballot
   * Retrieves the candidates for the current ballot from the database, stores
   * them and returns them as an array of Candidates.
   */
-  private static function retrieveCandidates($id){
-    //sql get candidates where ballot_id = $id
-    //"SELECT * FROM candidates WHERE ballot_id = '".$id."'";
-
-    $placeholder = new Candidate(1,Dave,123);
-    $candidates = array($placeholder);
+  private function retrieveCandidates(){
+    include("db.php");
+    include_once("Candidate.php");
+    $candidates = array();
+    $query = "SELECT * FROM candidates WHERE ballot_id = '".$this->id."'";
+    $result = $conn->query($query);
+    while($row = mysqli_fetch_array($result)){
+      $candidate = Candidate::makeExistingCandidate($row['id']);
+      // echo($candidate.toJSON());
+      array_push($candidates, $candidate);
+    }
+    var_dump($candidates);
     return $candidates;
   }
 
   public function commit(){
-    include('db.php');
+    include_once('db.php');
     $query = "UPDATE ballot SET name='".$this->name."', description='".$this->description."' WHERE id = '".$this->id."'";
 
     $conn->query($query);
   }
 
-
   public function toDashboardMarkup($userVotedState){
-     $string = "";
-     $string .= "<li class='collection-item avatar'>";
+    $string = "";
+    $string .= "<li class='collection-item avatar'>";
     $string .= "<i class='material-icons circle blue'>grade</i>";
     $string .= "<span class='title'>".$this->name."</span>";
     $string .= "<p>".$this->description."</p>";
@@ -86,7 +106,13 @@ class Ballot
     $string .= "<i class='large material-icons'>subject</i>";
     $string .= "</a>";
     $string .= "</li>";
-     return $string;
+    return $string;
+  }
+
+  public function toJSON(){
+    $array = array('id' => $this->id, 'name' => $this->name, 'description' => $this->description, 'organisation' => $this->organisation, 'state' => $this->state);
+
+    return json_encode($array);
   }
 
   public function getId(){
@@ -111,6 +137,22 @@ class Ballot
 
   public function setDescription($description){
     $this->description = $description;
+  }
+
+  public function getState(){
+    return $this->state;
+  }
+
+  public function setState($state){
+    $this->state = $state;
+  }
+
+  public function getOrganisation(){
+    return $this->organisation;
+  }
+
+  public function setOrganisation($organisation){
+    $this->organisation = $organisation;
   }
 
   public function getCandidates(){

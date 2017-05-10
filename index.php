@@ -1,9 +1,9 @@
 <?php
-include('php/Login.php');
+include_once('php/Login.php');
 $Login->start_session();
 $Login->check_session();
-include("includes/head.php");
-include("includes/nav.php");
+include_once("includes/head.php");
+include_once("includes/nav.php");
   ?>
   <div class="container">
     <ul class="collection">

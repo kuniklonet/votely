@@ -25,6 +25,7 @@ class Vote
     //
     // Next create a new vote in the database
     // "INSERT INTO vote (ballot_id) VALUES (".$ballot_id.")";
+    // SELECT LAST_INSERTED_ID();
 
     //TODO: Find out what id the DBMS gave this vote. Store it in $id.
 
