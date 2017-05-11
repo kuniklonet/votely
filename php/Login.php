@@ -28,6 +28,9 @@ class Login
   * Logs the user in if login details are correct. Returns -1 if the login details are incorrect.
   */
   public static function validate($username, $password, $organisation){
+    if(!strlen($username) || !strlen($organisation)){
+      return 0;
+    }
     self::start_session();
     include_once('db.php');
     // //using database
