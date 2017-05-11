@@ -45,8 +45,6 @@ class Ballot
       $this->setOrganisation($row['organisation']);
       $this->setState($row['state']);
 
-      // echo("refreshed ");
-
       $candidates = $this->retrieveCandidates();
       foreach ($candidates as $candidate) {
       $this->addCandidate($candidate);
@@ -82,10 +80,8 @@ class Ballot
     $result = $conn->query($query);
     while($row = mysqli_fetch_array($result)){
       $candidate = Candidate::makeExistingCandidate($row['id']);
-      // echo($candidate.toJSON());
       array_push($candidates, $candidate);
     }
-    var_dump($candidates);
     return $candidates;
   }
 

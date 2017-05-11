@@ -30,10 +30,14 @@ class DashboardLoad{
   }
 
   public static function toMarkup($ballots){
-    $string = "";
-    foreach ($ballots as $ballot) {
-      $string .= $ballot->toDashboardMarkup();
+    include_once("Ballot.php");
+    $string = "<ul class='collection'>";
+
+    for ($i = 0; $i < count($ballots); $i++) {
+      $string .= $ballots[$i]->toDashboardMarkup();
     }
+    $string .= "</ul>";
+    return $string;
   }
 
   public static function toJSON(){
