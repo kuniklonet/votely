@@ -4,13 +4,12 @@
 class DashboardLoad{
 
   public static function retrieveBallots(){
-
-    include_once("Login.php");
+    // require_once("Login.php");
     include_once("Ballot.php");
     include_once('db.php');
-    $Login->start_session();
+    session_start();
     $ballots = array();
-    // // $query = "SELECT * FROM ballots WHERE organisation = '".$_SESSION['organisation']."' AND state = 1";
+    $query = "SELECT * FROM ballots WHERE organisation = '".$_SESSION['organisation']."' AND state = 1";
     $query = "SELECT * FROM ballots";
     $result = $conn->query($query);
     if(mysqli_num_rows($result)<1){
@@ -29,7 +28,7 @@ class DashboardLoad{
     return $ballots;
   }
 
-  public static function toMarkup($ballots){
+  public static function toDashboardMarkup($ballots){
     include_once("Ballot.php");
     $string = "<ul class='collection'>";
 
@@ -40,8 +39,26 @@ class DashboardLoad{
     return $string;
   }
 
-  public static function toJSON(){
+  public static function toModalMarkup($ballot_id){
+    require("Ballot.php");
+    $ballot = Ballot::makeExistingBallot($ballot_id);
+    $candidates = $ballot->getCandidates();
+    $string = "<div class='modal-content'>";
+    $string .= "<h3>".$ballot->getName()."</h3>";
+    $string .= "<p>".$ballot->getDescription()."</p>";
+    $string .= "<ul class='collection with-header'>";
+    $string .= "<li class='collection-header'><h4>Candidates</h4></li>";
 
+    foreach($candidates as $candidate){
+      $string .= $candidate->toModalMarkup();
+    }
+
+    $string .= "</ul>";
+    $string .= "</div>";
+    $string .= "<div class='modal-footer'>";
+    $string .= "<a class='waves-effect waves-light btn col s4'><i class='material-icons right'>send</i>Cast Vote</a>";
+    $string .= "</div>";
+    return $string;
   }
 }
  ?>

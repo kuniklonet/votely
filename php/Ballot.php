@@ -10,7 +10,7 @@ class Ballot
   private $organisation = "";
   private $state = "";
   private $candidates = array();
-  private $votes = array(); //array of vote objects relating to this ballot.
+  // private $votes = array(); //array of vote objects relating to this ballot.
 
   function __construct($id, $name, $description)
   {
@@ -152,7 +152,7 @@ class Ballot
   }
 
   public function getCandidates(){
-    return $candidates;
+    return $this->candidates;
   }
 
   public function addCandidate($candidate){
