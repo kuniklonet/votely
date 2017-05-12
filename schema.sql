@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 11, 2017 at 11:10 AM
+-- Generation Time: May 12, 2017 at 02:30 PM
 -- Server version: 5.6.28
 -- PHP Version: 5.5.33
 
@@ -90,7 +90,7 @@ CREATE TABLE `users` (
   `username` varchar(25) NOT NULL,
   `password` varchar(1023) NOT NULL,
   `organisation` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL
+  `email` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -171,12 +171,12 @@ ALTER TABLE `ballots`
 -- AUTO_INCREMENT for table `candidates`
 --
 ALTER TABLE `candidates`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `vote`
 --
@@ -187,16 +187,16 @@ ALTER TABLE `vote`
 --
 
 --
+-- Constraints for table `ballots`
+--
+ALTER TABLE `ballots`
+  ADD CONSTRAINT `ballots_ibfk_1` FOREIGN KEY (`organisation`) REFERENCES `organisations` (`organisation_name`);
+
+--
 -- Constraints for table `candidates`
 --
 ALTER TABLE `candidates`
   ADD CONSTRAINT `candidates_ibfk_1` FOREIGN KEY (`ballot_id`) REFERENCES `ballots` (`id`);
-
---
--- Constraints for table `organisations`
---
-ALTER TABLE `organisations`
-  ADD CONSTRAINT `organisations_ibfk_1` FOREIGN KEY (`organisation_name`) REFERENCES `ballots` (`organisation`);
 
 --
 -- Constraints for table `preference`
