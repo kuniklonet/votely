@@ -40,28 +40,13 @@ class Login
       $dbpass = $row['password'];
     }
 
-    if($password == $dbpass){
+    if(password_verify($password, $dbpass)){
       $_SESSION["username"] = $username;
       $_SESSION["organisation"] = $organisation;
       return 1;
     }else{
       return 0;
     }
-
-    // using fixed username and password for testing
-    // if($username == "mark" && $password == "pass"){
-    //   $_SESSION["username"] = $username;
-    //   $_SESSION["organisation"] = $organisation;
-    //   return 1;
-    // }else{
-    //   return 0;
-    // }
-
-    //easy mode
-    // $_SESSION["username"] = "testuser";
-    // $_SESSION["organisation"] = "testorg";
-    // return 1;
-
   }
 
   /**
@@ -73,6 +58,39 @@ class Login
     unset($_SESSION['username']);
     session_unset();
     session_destroy();
+  }
+
+  public static function createUser($username, $password, $organisation){
+    include('db.php');
+
+    $query = "SELECT * FROM  organisations WHERE organisation_name = '".$organisation."'";
+    $result = $conn->query($query);
+    if(!$result){
+      return 3; //organisation does not exist
+    }
+
+    $query = "SELECT * FROM  users WHERE username =  '".$useranme."' AND organisation = '".$organisation."'";
+    $result = $conn->query($query);
+    if(!$result){
+      return 2; //username already exists within organisation
+    }
+
+    $hashedPassword = self::hashPassword($password);
+
+    $query = "INSERT INTO users (username, password, organisation) VALUES ('".$username."', '".$hashedPassword."', '".$organisation."')";
+    // $query = "INSERT INTO users (username, password, organisation) VALUES ('John', 'Doe', 'scu')";
+    $result = $conn->query($query);
+    if($result){
+      return 1; //success
+    }
+
+    return 4; //unknown error
+  }
+
+  private static function hashPassword($password){
+    $hash = password_hash($password, PASSWORD_DEFAULT);
+
+    return $hash;
   }
 
 }
