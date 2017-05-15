@@ -34,15 +34,17 @@ class Login
     self::start_session();
     include_once('db.php');
     // //using database
-    $query = "SELECT password FROM users WHERE username = '".$username."' AND organisation = '".$organisation."'";
+    $query = "SELECT * FROM users WHERE username = '".$username."' AND organisation = '".$organisation."'";
     $result = $conn->query($query);
     foreach($result as $row){
       $dbpass = $row['password'];
+      $userId = $row['id'];
     }
 
     if(password_verify($password, $dbpass)){
       $_SESSION["username"] = $username;
       $_SESSION["organisation"] = $organisation;
+      $_SESSION["userId"] = $userId;
       return 1;
     }else{
       return 0;

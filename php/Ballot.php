@@ -19,7 +19,6 @@ class Ballot
     $this->description = $description;
   }
 
-
   public static function makeExistingBallot($id){
     require('db.php');
 
@@ -50,7 +49,6 @@ class Ballot
       $this->addCandidate($candidate);
       }
     }
-
   }
 
   /*

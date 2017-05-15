@@ -52,5 +52,23 @@ include("php/DashboardLoad.php");
     function updateModal(markup){
       $("#modal1").html(markup);
     }
+
+    function submit(){
+      //TODO
+      // get all input box names and values
+      var $("#modal1 :input");
+      var preferences = $("form :input").map(function(index, elm) {
+        return {candidateId: elm.name, preference: $(elm).val()};
+      });
+      // disable all inputs
+      // json and ajax them
+      // if error
+      // enable inputs again and display error message
+      //
+      // if success
+      // close modal
+      // ajax refresh dashboard
+      // display success message
+    }
   </script>
 </html>

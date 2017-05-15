@@ -7,31 +7,82 @@ class Vote
   private $id;
   private $ballot_id;
   private $preferences; //array of key value preferences.
-  function __construct($id, $ballot_id)
+  function __construct($ballot_id)
   {
     $this->id = $id;
     $this->ballot_id = $ballot_id;
   }
 
-  public function retrievePreferences(){
-    //"SELECT * FROM preference WHERE vote_id = '".$id."'";
-    $placeholder = array(1 => 123,2 => 243); //(preferece => candidate_id)
-    $preferences = $placeholder;
+  public static function makeNewVote($preferences, $ballot, $userDetails){
+    include_once('db.php');
+    $ballotId = $ballot->getId();
+    $query = "INSERT INTO vote (ballot_id) VALUES ('".$ballotId."')";
+    $conn->query($query);
+    $lastId = $conn->insert_id;
+
+    $vote = new Vote($ballotId);
+    $vote->setPreferences($preferences);
+    $vote->commitPreferences();
+    $vote->commitRollcall($userDetails['userId']);
+
+    return $vote;
   }
 
-  public function commit(){
-    // First add the user to the roll for this ballot.
-    // "INSERT INTO roll_call (user_id, ballot_id) VALUES (".$_SESSION['user'].",".$ballot_id.")";
-    //
-    // Next create a new vote in the database
-    // "INSERT INTO vote (ballot_id) VALUES (".$ballot_id.")";
-    // SELECT LAST_INSERTED_ID();
+  private function commitPreferences(){
+    include_once('db.php');
 
-    //TODO: Find out what id the DBMS gave this vote. Store it in $id.
+    foreach($preferences as $preference){
+      $query = "INSERT INTO preference (vote_id, candidate_id, preference) VALUES ('".$id."','".$prefence['candidate']."', '".$preference['preference']"')";
+      $conn->query($query);
+    }
+  }
 
-    // for ($i=0; $i < count($preferences); $i++) {
-      //insert each preference
-    // }
+  private function commitRollcall($userId){
+    include_once('db.php');
+    $query = "INSERT INTO roll_call (user_id, ballot_id) VALUES ('".$userId."', '".$ballotId."')";
+    $conn->query($query);
+  }
+
+  public static function validateVote($vote, $ballot, $userDetails){
+    //check preferences are well formed
+    if(!checkPreferences()){
+      return 0;
+    }
+    //check user is a member of the same organisation as the ballot.
+    if ($userDetails["organisation"] != $ballot->getOrganisation){
+      return 0;
+    }
+    //check user hasn't already voted
+    if(self::checkUserVoted($ballot, $userDetails)){
+      return 0;
+    }
+    //vote is valid
+    return 1;
+  }
+
+  private static function checkPreferences($vote){
+    $size = sizeof($vote);
+    for($i=1; i<=$size; i++){
+      if(!array_key_exists($i,$vote)){
+        return 0;
+      }
+    }
+    return 1;
+  }
+
+  private static function checkUserVoted($ballot, $userDetails){
+    include_once('db.php');
+    $query = "SELECT * FROM roll_call WHERE user_id = '".$userDetails["userId"]."' AND ballot_id = '".$ballot->getId()."'";
+    $result = $conn->query($query);
+    if(mysqli_num_rows($result)<1){
+      return 0;
+    }else{
+      return 1;
+    }
+  }
+
+  private function setPreferences($preferences){
+    $this->preferences = $preferences;
   }
 
 }
