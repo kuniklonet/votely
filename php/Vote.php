@@ -5,12 +5,12 @@
 class Vote
 {
   private $id;
-  private $ballot_id;
+  private $ballotId;
   private $preferences = array(); //array of key value preferences.
-  function __construct($id, $ballot_id)
+  function __construct($id, $ballotId)
   {
     $this->id = $id;
-    $this->ballot_id = $ballot_id;
+    $this->ballotId = $ballotId;
   }
 
   public static function makeNewVote($preferences, $ballot, $userDetails){
@@ -31,22 +31,20 @@ class Vote
   private function commitPreferences(){
     include('db.php');
     foreach($this->preferences as $preference){
-      $query = "INSERT INTO preference (vote_id, candidate_id, preference) VALUES ('".$this->id."','".$preference['candidate']."', '".$preference['preference']."')";
-      var_dump($query);
+      $query = "INSERT INTO preference (vote_id, candidate_id, preference) VALUES ('".$this->id."','".$preference['candidateId']."', '".$preference['preference']."')";
       $conn->query($query);
     }
   }
 
   private function commitRollcall($userId){
     include('db.php');
-    $query = "INSERT INTO roll_call (user_id, ballot_id) VALUES ('".$userId."', '".$ballotId."')";
+    $query = "INSERT INTO roll_call (user_id, ballot_id) VALUES ('".$userId."', '".$this->ballotId."')";
     $conn->query($query);
   }
 
   public static function validateVote($vote, $ballot, $userDetails){
     //check preferences are well formed
     if(!self::checkPreferences($vote)){
-      // echo "1";
       return 0;
     }
     //check user is a member of the same organisation as the ballot.
@@ -89,7 +87,5 @@ class Vote
   private function setPreferences($preferences){
     $this->preferences = $preferences;
   }
-
 }
-
- ?>
+?>

@@ -44,7 +44,7 @@ class DashboardLoad{
     $ballot = Ballot::makeExistingBallot($ballot_id);
     $candidates = $ballot->getCandidates();
     $string = "<div class='modal-content'>";
-    $string .= "<h3 name='".$ballot->getId()."'>".$ballot->getName()."</h3>";
+    $string .= "<h3 id='ballot-id' name='".$ballot->getId()."'>".$ballot->getName()."</h3>";
     $string .= "<p>".$ballot->getDescription()."</p>";
     $string .= "<ul class='collection with-header'>";
     $string .= "<li class='collection-header'><h4>Candidates</h4></li>";
