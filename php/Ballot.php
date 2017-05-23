@@ -96,7 +96,7 @@ class Ballot
 		$string .= "<i class='material-icons circle blue'>grade</i>";
 		$string .= "<span class='title'>".$this->name."</span>";
 		$string .= "<p>".$this->description."</p>";
-		$string .= "<a href='#modal1'class='secondary-content btn-floating btn-large red' onclick='loadModal(".$this->id.")'>";
+		$string .= "<a href='#modal1'class='secondary-content btn-floating btn-large red tooltipped' onclick='loadModal(".$this->id.")' data-position='left' data-delay='150' data-tooltip='View ballot'>";
 		$string .= "<i class='large material-icons'>subject</i>";
 		$string .= "</a>";
 		$string .= "</li>";

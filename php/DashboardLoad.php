@@ -9,20 +9,26 @@ class DashboardLoad{
     include_once('db.php');
     session_start();
     $ballots = array();
+    $alreadyVoted = array();
+    $query = "SELECT 'ballot_id' FROM roll_call WHERE user_id = '".$_SESSION['userId']."'";
+		$result = $conn->query($query);
+		while($row = mysqli_fetch_array($result)){
+		  array_push($alreadyVoted, $row['ballot_id']);
+		}
     $query = "SELECT * FROM ballots WHERE organisation = '".$_SESSION['organisation']."' AND state = 1";
-    $query = "SELECT * FROM ballots";
     $result = $conn->query($query);
     if(mysqli_num_rows($result)<1){
       return 10;
     }else{
       while($row = mysqli_fetch_array($result)){
-        $ballot = Ballot::makeExistingBallot($row['id']);
-        $ballot->setName("testname");
-        $ballot->setName($row['name']);
-        $ballot->setDescription($row['description']);
-        $ballot->setOrganisation($row['organisation']);
-        $ballot->setState($row['state']);
-        array_push($ballots, $ballot);
+      	if(!in_array($alreadyVoted, $row['id'])) {
+					$ballot = Ballot::makeExistingBallot($row['id']);
+					$ballot->setName($row['name']);
+					$ballot->setDescription($row['description']);
+					$ballot->setOrganisation($row['organisation']);
+					$ballot->setState($row['state']);
+					array_push($ballots, $ballot);
+				}
       }
     }
     return $ballots;
