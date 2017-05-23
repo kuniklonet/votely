@@ -69,10 +69,11 @@ include("php/DashboardLoad.php");
       var voteDetails = {
         preferences: preferences,
         ballotId: ballotId
-      }
+      };
       console.log(voteDetails);
       // disable all inputs
       $("#target :input").prop("disabled", true);
+      $("#modal-submit-button").addClass("disabled");
 
       $.post("php/submitVote.php", {data: voteDetails}).done(
         function(data){
@@ -81,6 +82,7 @@ include("php/DashboardLoad.php");
             //error
             //enable inputs again
             $("#target :input").prop("disabled", false);
+            $("#modal-submit-button").removeClass("disabled");
             //display error message
           }else {
             //success

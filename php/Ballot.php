@@ -158,7 +158,7 @@ class Ballot
 	}
 
 	public function getVotes(){
-		return $votes;
+		return $this->votes;
 	}
 
 	public function addVote($vote){
