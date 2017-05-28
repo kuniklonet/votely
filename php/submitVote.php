@@ -11,10 +11,9 @@ $userDetails = array(
   'organisation' => $_SESSION['organisation'],
   'userId' => $_SESSION['userId']
 );
-if(Vote::validateVote($vote, $ballot, $userDetails)){
+$validation = Vote::validateVote($vote, $ballot, $userDetails);
+if($validation == 1){
   Vote::makeNewVote($vote, $ballot, $userDetails);
-  echo(1); //success
-}else{
-  echo(0); //invalid votes
 }
+echo($validation);
 ?>

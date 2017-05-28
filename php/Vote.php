@@ -46,17 +46,17 @@ class Vote
 	}
 
 	public static function validateVote($vote, $ballot, $userDetails){
-		//check preferences are well formed
-		if(!self::checkPreferences($vote)){
-			return 0;
-		}
 		//check user is a member of the same organisation as the ballot.
 		if ($userDetails["organisation"] != $ballot->getOrganisation()){
-			return 0;
+			return 4;
 		}
 		//check user hasn't already voted
 		if(self::checkUserVoted($ballot, $userDetails)){
-			return 0;
+			return 3;
+		}
+		//check preferences are well formed
+		if(!self::checkPreferences($vote)){
+			return 2;
 		}
 		// //vote is valid
 		return 1;
