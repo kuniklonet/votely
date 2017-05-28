@@ -2,6 +2,13 @@
   include_once('php/Login.php');
   $Login->start_session();
   include_once("includes/head.php");
+  if($_GET["msg"] == "err"){
+      ?>
+      <script type="text/javascript">
+          Materialize.toast('Your login details are incorrect', 60000, 'red lighten-1');
+      </script>
+    <?php
+  }
 ?>
 <nav>
   <div class="nav-wrapper blue">
