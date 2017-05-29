@@ -54,10 +54,10 @@ class Ballot
 	/*
 	* Returns a new Ballot object that contains its id in the database.
 	*/
-	public static function makeNewBallot(){
+	public static function makeNewBallot($organisation){
 		include_once('db.php');
 
-		$query = "INSERT INTO ballots (description) VALUES ('test')";
+		$query = "INSERT INTO ballots (organisation, state) VALUES ('".$organisation."', 1)";
 		$conn->query($query);
 
 		$lastId = $conn->insert_id;
@@ -84,9 +84,8 @@ class Ballot
 	}
 
 	public function commit(){
-		include_once('db.php');
-		$query = "UPDATE ballot SET name='".$this->name."', description='".$this->description."' WHERE id = '".$this->id."'";
-
+		include('db.php');
+		$query = "UPDATE ballots SET name='".$this->name."', description='".$this->description."' WHERE id = '".$this->id."'";
 		$conn->query($query);
 	}
 

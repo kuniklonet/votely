@@ -5,6 +5,13 @@ $Login->check_session();
 include_once("includes/head.php");
 include_once("includes/nav.php");
 include("php/DashboardLoad.php");
+if ($_GET['msg'] == "ballotsuccess") {
+	?>
+    <script type="text/javascript">
+        Materialize.toast('The new ballot was successfully added', 10000, 'green lighten-1');
+    </script>
+	<?php
+}
 ?>
 <div class="container" id="dashboard">
 	<?php

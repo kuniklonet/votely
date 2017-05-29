@@ -64,7 +64,6 @@ class Login
 
   public static function createUser($username, $password, $organisation){
     include('db.php');
-
     $query = "SELECT * FROM  organisations WHERE organisation_name = '".$organisation."'";
     $result = $conn->query($query);
     if(!$result){
@@ -80,7 +79,6 @@ class Login
     $hashedPassword = self::hashPassword($password);
 
     $query = "INSERT INTO users (username, password, organisation) VALUES ('".$username."', '".$hashedPassword."', '".$organisation."')";
-    // $query = "INSERT INTO users (username, password, organisation) VALUES ('John', 'Doe', 'scu')";
     $result = $conn->query($query);
     if($result){
       return 1; //success
