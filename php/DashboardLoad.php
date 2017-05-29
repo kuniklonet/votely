@@ -62,7 +62,7 @@ class DashboardLoad{
     $string .= "</ul>";
     $string .= "</div>";
     $string .= "<div class='modal-footer'>";
-    $string .= "<a id='modal-submit-button' class='waves-effect waves-light btn col s4' onclick='submit()'><i class='material-icons right'>send</i>Cast Vote</a>";
+    $string .= "<div class='row'><a id='modal-submit-button' class='waves-effect waves-light btn blue darken-1 col s12' onclick='submit()'>Cast Vote</a></div>";
     $string .= "</div>";
     return $string;
   }

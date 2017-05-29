@@ -54,8 +54,8 @@ if (isset($_GET["msg"])) {
 
         <div id="candidates">
             <div class="row">
-                <div class="input-field col s5">
-                    <button type="button" class="btn waves-effect waves-light blue" onclick="addCandidate()">+ Candidate</button>
+                <div class="input-field">
+                    <button type="button" class="btn waves-effect waves-light blue col s12" onclick="addCandidate()">Add another Candidate</button>
                 </div>
             </div>
             <div class="row">
@@ -66,9 +66,8 @@ if (isset($_GET["msg"])) {
         </div>
 
         <div class="row">
-            <div class="input-field col">
-                <button class="btn waves-effect waves-light blue" type="submit" name="action">Submit
-                    <i class="material-icons right">send</i>
+            <div class="input-field">
+                <button class="btn waves-effect waves-light blue darken-1 col s12" type="submit" name="action">Submit
                 </button>
             </div>
         </div>
@@ -88,12 +87,12 @@ if (isset($_GET["msg"])) {
             </div>
 
             <div class="row">
-                <div class="input-field col s5">
-                    <button type="button" class="btn waves-effect waves-light blue" onclick="generate()">Generate
+                <div class="input-field">
+                    <button type="button" class="btn waves-effect waves-light blue  col s3" onclick="generate()">Generate
                         <i class="material-icons right">vpn_key</i>
                     </button>
                 </div>
-                <div class="input-field col s7">
+                <div class="input-field col s9">
                     <input placeholder="Click GENERATE for a random password" id="password" type="text" name="password"
                            class="validate">
                     <label for="password">Password</label>
@@ -106,9 +105,8 @@ if (isset($_GET["msg"])) {
                 </div>
             </div>
             <div class="row">
-                <div class="input-field col">
-                    <button class="btn waves-effect waves-light blue" type="submit" name="action">Submit
-                        <i class="material-icons right">send</i>
+                <div class="input-field">
+                    <button class="btn waves-effect waves-light blue darken-1 col s12" type="submit" name="action">Submit
                     </button>
                 </div>
             </div>
