@@ -1,6 +1,9 @@
 <?php
   include_once('php/Login.php');
   $Login->start_session();
+  if(isset($_SESSION['username'])){
+    header("Location: /");
+  }
   include_once("includes/head.php");
   if($_GET["msg"] == "err"){
       ?>
