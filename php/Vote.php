@@ -47,9 +47,9 @@ class Vote
 
 	public static function validateVote($vote, $ballot, $userDetails){
 		//check user is a member of the same organisation as the ballot.
-		if ($userDetails["organisation"] != $ballot->getOrganisation()){
-			return 4;
-		}
+//		if ($userDetails["organisation"] != $ballot->getOrganisation()){
+//			return 4;
+//		}
 		//check user hasn't already voted
 		if(self::checkUserVoted($ballot, $userDetails)){
 			return 3;
