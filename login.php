@@ -12,10 +12,17 @@ if ($_GET["msg"] == "err") {
 	</script>
 	<?php
 }
+if ($_GET["msg"] == "loggedout") {
+	?>
+    <script type="text/javascript">
+        Materialize.toast('You have successfully logged out', 60000, 'green lighten-1');
+    </script>
+	<?php
+}
 ?>
 <nav>
 	<div class="nav-wrapper blue">
-		<a href="#" class="brand-logo center">Votely</a>
+		<a href="login.php" class="brand-logo center">Votely</a>
 		<ul id="nav-mobile" class="left hide-on-med-and-down">
 		</ul>
 	</div>
